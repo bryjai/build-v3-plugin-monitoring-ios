@@ -1,0 +1,31 @@
+source 'git@github.com:followanalytics/fa-build-private-pods.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
+use_frameworks!
+
+platform :ios, '11.1'
+
+target 'Build-V3-Plugin-Monitoring-ios_Example' do
+  pod 'Build-V3-Plugin-Monitoring-ios', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/GROW', :path => '../'
+
+  target 'Build-V3-Plugin-Monitoring-ios_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+          config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.1'
+      end
+  end
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.1'
+  end
+end

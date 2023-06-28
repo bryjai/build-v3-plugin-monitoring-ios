@@ -37,13 +37,16 @@ Pod::Spec.new do |s|
   # s.dependency 'FirebasePerformance'
   # s.dependency 'GROW'
 
-  s.subspec 'FirebasePerformance' do |sp|
-    sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
-    sp.dependency 'FirebasePerformance'
-  end
+  s.default_subspecs = :none
 
   s.subspec 'GROW' do |sp|
     sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/GROWPerformanceTracesManager.swift']
     sp.dependency 'GROW'
   end
+  
+  s.subspec 'FirebasePerformance' do |sp|
+    sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
+    sp.dependency 'FirebasePerformance'
+  end
+
 end

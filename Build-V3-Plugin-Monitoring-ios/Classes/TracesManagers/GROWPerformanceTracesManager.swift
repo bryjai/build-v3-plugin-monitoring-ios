@@ -7,8 +7,8 @@
 
 import Foundation
 import FASDKBuild_ios
+import GrowSDK
 import WebKit
-import GROW 
 
 public class GROWTracesManager: NSObject {
     var savedDates = [String: Date?]()
@@ -37,7 +37,11 @@ extension GROWTracesManager: TracesManager {
             if let startDate = get(forEvent: SDKEvent.sdk_start.rawValue) {
                 let interval = Date().timeIntervalSince(startDate)
                 let duration_s = String(format: "%.2fs", interval)
-                debugPrint("🚦 \(sdkEvent) in \(duration_s)")
+                
+                // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
+                var event = GrowSDK.Grow.Events.Custom.create(sdkEvent.rawValue)
+                event = event.putValue(duration_s, forKey: "duration")
+                event.send()
             }
         }
     }
@@ -55,14 +59,21 @@ extension GROWTracesManager: TracesManager {
         if webViewEvent != LoadingEvent.native_start {
             let index = FABuilder.shared.estimatedTabIndex(webView: webView)
             
-            if sectionViewController.isPersistantLogin() {
-                debugPrint("sectionViewController.isPersistantLogin")
-            }
-            
             if let startDate = get(forEvent: LoadingEvent.native_start.rawValue, webView: webView) {
                 let interval = Date().timeIntervalSince(startDate)
                 let duration_s = String(format: "%.2fs", interval)
-                debugPrint("🚦 Section:\(index) \(webViewEvent) in \(duration_s) url:\(webView.url!)")
+                
+                // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
+                var event = GrowSDK.Grow.Events.Custom.create(webViewEvent.rawValue)
+                event = event.putValue(duration_s, forKey: "duration")
+                event = event.putValue("\(index)", forKey: "index")
+                if let urlStr = webView.url?.absoluteString {
+                    event = event.putValue(urlStr, forKey: "url")
+                }
+                if let pathStr = webView.url?.path {
+                    event = event.putValue(pathStr, forKey: "path")
+                }
+                event.send()
             }
         }
     }
