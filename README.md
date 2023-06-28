@@ -8,7 +8,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-FASDKBuild-Plugin-Monitor-Performances-ios is available through [CocoaPods](https://cocoapods.org). To install
+Build-V3-Plugin-Monitoring-ios is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
@@ -59,9 +59,10 @@ extension AppCoordinator: FirebasePerformanceDelegate {
 
 ```
 
-## RoadMap 
-[ ] Add Datadog traces support 
-[ ] Add more SDK life Events 
+## RoadMap
+
+[ ] Add Datadog traces support  
+[ ] Add more SDK life Events  
 
 ## Author
 
@@ -69,4 +70,4 @@ Jérôme Morissard, jerome.morissard@followanalytics.com
 
 ## License
 
-FASDKBuild-Plugin-Monitor-Performances-ios is available under the MIT license. See the LICENSE file for more info.
+Build-V3-Plugin-Monitoring-ios is available under the MIT license. See the LICENSE file for more info.
