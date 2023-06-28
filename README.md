@@ -13,6 +13,9 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'Build-V3-Plugin-Monitoring-ios', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+pod 'Build-V3-Plugin-Monitoring-ios/GROW', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+
 ```
 
 ## Metrics 
@@ -52,7 +55,8 @@ This sample is available in the demo project of that plugin.
     override func getPlugins() -> [FABasePlugin] {
         let firebaseManager = FirebasePerformanceTracesManager() // to log traces on Firebase Performances
         let debugManager = DebugPrintTracesManager() // to log traces in the console
-        let plugin = PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, debugManager])
+        let growManager = GROWTracesManager() // to log traces on GROW events
+        let plugin = PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, debugManager, growManager])
         return [plugin]
     }
 ```
