@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '11.1'
   s.swift_version = '5.0'
 
-  s.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/*', 'Build-V3-Plugin-Monitoring-ios/Classes/*/**']
+  s.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/Core/*', 'Build-V3-Plugin-Monitoring-ios/Classes/Core/*/**']
 
   s.resource_bundles = {
      'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.js']
@@ -34,5 +34,16 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'FirebasePerformance'
+  # s.dependency 'FirebasePerformance'
+  # s.dependency 'GROW'
+
+  s.subspec 'FirebasePerformance' do |sp|
+    sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
+    sp.dependency 'FirebasePerformance'
+  end
+
+  s.subspec 'GROW' do |sp|
+    sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/GROWPerformanceTracesManager.swift']
+    sp.dependency 'GROW'
+  end
 end
