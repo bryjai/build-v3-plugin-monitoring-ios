@@ -15,6 +15,30 @@ it, simply add the following line to your Podfile:
 pod 'Build-V3-Plugin-Monitoring-ios', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 ```
 
+## Metrics 
+
+- **Durations**, to load each WebViews 
+    - **native_start** : The native event when the WebView start to load an url
+    - **web_load** : The Web event when the WebView start to load the DOM
+    - **web_DOMContentLoaded** : The Web event when the WebView has downloaded the DOM
+    - **web_DocumentReadyStateIntractive** : The Web event when the WebView change to Interactive 
+    - **web_DocumentReadyStateComplete** : The Web event when the WebView change to Complete 
+    - **native_didFinish** : The native event when the WebView finish to download all the resources
+
+- **Sections**, to identify each WebView using an index.
+
+- **Build Events**, some important events in a BUILD App 
+    - **sdk_start**
+    - **sdk_remove_splashview** : when the initial SplashScreen is removed 
+    - **sdk_all_webviews_are_loaded** : when all the webViews (all sections) are loaded
+
+- **Traces attributes**,
+    - **url**,
+    - **path**,
+    - **sectionType**,
+    - **sectionIndex**,
+    - **loggedInStatus**,
+
 ## Firebase integration demo 
 
 The Plugin can be connected to Firebase Performance project.
@@ -66,7 +90,7 @@ extension AppCoordinator: FirebasePerformanceDelegate {
 
 ## Author
 
-Jérôme Morissard, jerome.morissard@followanalytics.com
+Jérôme Morissard, jerome.morissard@bryj.ai
 
 ## License
 
