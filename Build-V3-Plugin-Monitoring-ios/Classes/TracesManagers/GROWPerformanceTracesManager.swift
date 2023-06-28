@@ -36,7 +36,7 @@ extension GROWTracesManager: TracesManager {
         if sdkEvent != SDKEvent.sdk_start {
             if let startDate = get(forEvent: SDKEvent.sdk_start.rawValue) {
                 let interval = Date().timeIntervalSince(startDate)
-                let duration_s = String(format: "%.2fs", interval)
+                let duration_s = String(format: "%.2f", interval)
                 
                 // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
                 var event = GrowSDK.Grow.Events.Custom.create(sdkEvent.rawValue)
@@ -61,7 +61,7 @@ extension GROWTracesManager: TracesManager {
             
             if let startDate = get(forEvent: LoadingEvent.native_start.rawValue, webView: webView) {
                 let interval = Date().timeIntervalSince(startDate)
-                let duration_s = String(format: "%.2fs", interval)
+                let duration_s = String(format: "%.2f", interval)
                 
                 // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
                 var event = GrowSDK.Grow.Events.Custom.create(webViewEvent.rawValue)
