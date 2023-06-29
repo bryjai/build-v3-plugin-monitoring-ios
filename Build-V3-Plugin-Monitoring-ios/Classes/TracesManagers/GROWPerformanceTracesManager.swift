@@ -23,7 +23,7 @@ public class PluginMonitorTrace {
 }
 
 public class GROWTracesManager: NSObject {
-    weak var delegate: MonitorPluginDelegate?
+    public weak var delegate: MonitorPluginDelegate?
     var savedTraces = [String: PluginMonitorTrace?]()
     
     func start(traceName: String, event: String) {
@@ -149,6 +149,6 @@ extension GROWTracesManager {
     }
 }
 
-protocol MonitorPluginDelegate: NSObject {
+public protocol MonitorPluginDelegate: NSObject {
     func enrich(trace: PluginMonitorTrace)
 }
