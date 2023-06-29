@@ -10,71 +10,145 @@ import FASDKBuild_ios
 import GrowSDK
 import WebKit
 
-public class GROWTracesManager: NSObject {
-    var savedDates = [String: Date?]()
+public class PluginMonitorTrace {
+    var traceName: String
+    var event: String
+    var startDate = Date()
+    var attributes = [String:String]()
+    
+    init(traceName: String, event: String) {
+        self.traceName = traceName
+        self.event = event
+    }
+}
 
-    func get(forEvent: String) -> Date? {
-        if let d = savedDates[forEvent] {
-            return d
+public class GROWTracesManager: NSObject {
+    weak var delegate: MonitorPluginDelegate?
+    var savedTraces = [String: PluginMonitorTrace?]()
+    
+    func start(traceName: String, event: String) {
+        let t = PluginMonitorTrace(traceName: traceName, event: event)
+        savedTraces[traceName] = t
+    }
+    
+    func end(traceName: String) -> PluginMonitorTrace? {
+        if let t = savedTraces[traceName] {
+            savedTraces.removeValue(forKey: traceName)
+            
+            let interval = Date().timeIntervalSince(t!.startDate)
+            let duration_s = String(format: "%.2f", interval)
+            t!.attributes["duration"] = duration_s
+            return t
         }
+        
         return nil
     }
     
-    func get(forEvent: String, webView: WKWebView) -> Date? {
-        let address = "\(Unmanaged.passUnretained(webView).toOpaque())"
-        if let d = savedDates["\(address)_\(forEvent)"] {
-            return d
+    func send(trace: PluginMonitorTrace) {
+        if let d = delegate {
+            d.enrich(trace: trace)
         }
-        return nil
+        
+        // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
+        var event = GrowSDK.Grow.Events.Custom.create(trace.event)
+        for key in trace.attributes.keys {
+            if let v = trace.attributes[key] {
+                event = event.putValue(v, forKey: key)
+            }
+        }
+        event.send()
     }
 }
 
 extension GROWTracesManager: TracesManager {
     public func performancesMonitoring(sdkEvent: SDKEvent) {
-        savedDates[sdkEvent.rawValue] = Date()
+        var trace: PluginMonitorTrace?
         
-        if sdkEvent != SDKEvent.sdk_start {
-            if let startDate = get(forEvent: SDKEvent.sdk_start.rawValue) {
-                let interval = Date().timeIntervalSince(startDate)
-                let duration_s = String(format: "%.2f", interval)
-                
-                // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
-                var event = GrowSDK.Grow.Events.Custom.create(sdkEvent.rawValue)
-                event = event.putValue(duration_s, forKey: "duration")
-                event.send()
-            }
+        switch(sdkEvent){
+        case .sdk_start:
+            start(traceName: SDKEvent.sdk_remove_splashview.rawValue, event: "sdk_remove_splashview")
+            start(traceName: SDKEvent.sdk_all_webviews_are_loaded.rawValue, event: "sdk_all_webviews_are_loaded")
+            
+        case .sdk_remove_splashview:
+            trace = end(traceName: SDKEvent.sdk_remove_splashview.rawValue)
+
+        case .sdk_all_webviews_are_loaded:
+            trace = end(traceName: SDKEvent.sdk_all_webviews_are_loaded.rawValue)
+        }
+        
+        if let t = trace {
+            enrich(trace: t)
+            send(trace: t)
         }
     }
     
     public func performancesMonitoring(webViewEvent: LoadingEvent, sectionViewController: FASectionViewController) {
-        let strEvent = webViewEvent.rawValue
-        
         guard let webView = sectionViewController.webView() else {
             return
         }
         
         let address = "\(Unmanaged.passUnretained(webView).toOpaque())"
-        savedDates["\(address)_\(strEvent)"] = Date()
+        let strEvent = webViewEvent.rawValue
         
-        if webViewEvent != LoadingEvent.native_start {
-            let index = FABuilder.shared.estimatedTabIndex(webView: webView)
+        var trace: PluginMonitorTrace?
+        switch(webViewEvent){
+        case .native_start:
+            start(traceName: "\(address)_\(LoadingEvent.web_load.rawValue)",
+                  event: "web_load")
             
-            if let startDate = get(forEvent: LoadingEvent.native_start.rawValue, webView: webView) {
-                let interval = Date().timeIntervalSince(startDate)
-                let duration_s = String(format: "%.2f", interval)
-                
-                // https://support.bryj.ai/docs/developer-guides/sdk/ios-sdk-integration-guide/
-                var event = GrowSDK.Grow.Events.Custom.create(webViewEvent.rawValue)
-                event = event.putValue(duration_s, forKey: "duration")
-                event = event.putValue("\(index)", forKey: "index")
-                if let urlStr = webView.url?.absoluteString {
-                    event = event.putValue(urlStr, forKey: "url")
-                }
-                if let pathStr = webView.url?.path {
-                    event = event.putValue(pathStr, forKey: "path")
-                }
-                event.send()
-            }
+            start(traceName: "\(address)_\(LoadingEvent.web_DOMContentLoaded.rawValue)",
+                  event: "web_DOMContentLoaded")
+            
+            start(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateIntractive.rawValue)",
+                  event: "web_DocumentReadyStateIntractive")
+            
+            start(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateComplete.rawValue)",
+                  event: "web_DocumentReadyStateComplete")
+            
+            start(traceName: "\(address)_\(LoadingEvent.native_didFinish.rawValue)",
+                  event: "native_didFinish")
+
+        case .web_load:
+            trace = end(traceName: "\(address)_\(LoadingEvent.web_load.rawValue)")
+            
+        case .web_DOMContentLoaded:
+            trace = end(traceName: "\(address)_\(LoadingEvent.web_DOMContentLoaded.rawValue)")
+
+        case .web_DocumentReadyStateIntractive:
+            trace = end(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateIntractive.rawValue)")
+
+        case .web_DocumentReadyStateComplete:
+            trace = end(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateComplete.rawValue)")
+
+        case .native_didFinish:
+            trace = end(traceName: "\(address)_\(LoadingEvent.native_didFinish.rawValue)")
+        }
+
+        if let t = trace {
+            enrich(trace: t)
+            enrich(trace: t, usingWebView: webView)
+            send(trace: t)
         }
     }
+}
+
+extension GROWTracesManager {
+    func enrich(trace: PluginMonitorTrace) {
+        trace.attributes["loginState"] = FABuilder.shared.stringifyLoggedInStatus()
+    }
+    
+    func enrich(trace: PluginMonitorTrace, usingWebView: WKWebView) {
+        let index = FABuilder.shared.estimatedTabIndex(webView: usingWebView)
+        trace.attributes["index"] = "\(index)"
+        if let urlStr = usingWebView.url?.absoluteString {
+            trace.attributes["url"] = urlStr
+        }
+        if let pathStr = usingWebView.url?.path {
+            trace.attributes["path"] = pathStr
+        }
+    }
+}
+
+protocol MonitorPluginDelegate: NSObject {
+    func enrich(trace: PluginMonitorTrace)
 }
