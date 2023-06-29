@@ -26,12 +26,12 @@ public class GROWTracesManager: NSObject {
     public weak var delegate: MonitorPluginDelegate?
     var savedTraces = [String: PluginMonitorTrace?]()
     
-    func start(traceName: String, event: String) {
+    public func start(traceName: String, event: String) {
         let t = PluginMonitorTrace(traceName: traceName, event: event)
         savedTraces[traceName] = t
     }
     
-    func end(traceName: String) -> PluginMonitorTrace? {
+    public func end(traceName: String) -> PluginMonitorTrace? {
         if let t = savedTraces[traceName] {
             savedTraces.removeValue(forKey: traceName)
             
@@ -44,7 +44,7 @@ public class GROWTracesManager: NSObject {
         return nil
     }
     
-    func send(trace: PluginMonitorTrace) {
+    public func send(trace: PluginMonitorTrace) {
         if let d = delegate {
             d.enrich(trace: trace)
         }
