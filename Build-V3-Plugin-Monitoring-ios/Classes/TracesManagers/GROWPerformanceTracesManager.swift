@@ -100,7 +100,7 @@ extension GROWTracesManager: TracesManager {
                   event: "web_DOMContentLoaded")
             
             start(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateIntractive.rawValue)",
-                  event: "web_DocumentReadyStateIntractive")
+                  event: "web_DocumentReadyStateInteractive")
             
             start(traceName: "\(address)_\(LoadingEvent.web_DocumentReadyStateComplete.rawValue)",
                   event: "web_DocumentReadyStateComplete")
