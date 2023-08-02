@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
      'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.js']
    }
-  s.dependency 'FASDKBuild-ios', '~> 3.9'
+  s.dependency 'FASDKBuild-ios', '>= 3.7.7'
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
