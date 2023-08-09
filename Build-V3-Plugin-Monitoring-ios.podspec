@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/bryjai/build-v3-plugin-monitoring-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Jérôme Morissard' => 'jerome.morissard@bryj.ai' }
-  s.source           = { :git => 'git@github.com:bryjai/build-v3-plugin-monitoring-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@github.com:bryjai/build-v3-plugin-monitoring-ios.git', :branch => 'origin/feature/legacy-sdk-support' }
 
   s.ios.deployment_target = '11.1'
   s.swift_version = '5.0'
