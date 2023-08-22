@@ -74,6 +74,18 @@ extension FirebasePerformanceTracesManager {
             }
         }
     }
+
+    func start(traceName: String) {
+        let trace = Performance.startTrace(name: traceName)
+        startedTraces[traceName] = trace
+    }
+
+    func end(traceName: String) {
+        if let trace = startedTraces[traceName] {
+            trace.stop()
+            startedTraces[traceName] = nil
+        }
+    }
 }
 
 extension FirebasePerformanceTracesManager: TracesManager {
