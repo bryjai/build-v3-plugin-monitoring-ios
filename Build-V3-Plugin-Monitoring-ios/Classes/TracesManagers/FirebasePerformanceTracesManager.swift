@@ -12,9 +12,9 @@ import WebKit
 
 public protocol FirebasePerformanceDelegate {
     func updateTraceAdditional(attributes: [String : String]) -> [String : String]
-    func performance_traceName(for event: SDKEvent) -> String?
-    func performance_didFinishTraceName(for index: Int) -> String?
-    func performance_DOMContentLoadedTraceName(for index: Int) -> String?
+    func performanceTraceNameForSDKEvent(for event: SDKEvent) -> String
+    func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String
+    func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String
 }
 
 public class FirebasePerformanceTracesManager: NSObject {
@@ -78,20 +78,6 @@ extension FirebasePerformanceTracesManager {
         }
     }
 
-    func performance_didFinishTraceName(for index: Int) -> String {
-        guard let traceName = delegate?.performance_didFinishTraceName(for: index) else {
-            return "webView_\(index)_didFinish"
-        }
-        return traceName
-    }
-
-    func performance_DOMContentLoadedTraceName(for index: Int) -> String {
-        guard let traceName = delegate?.performance_DOMContentLoadedTraceName(for: index) else {
-            return "webView_\(index)_DOMContentLoaded"
-        }
-        return traceName
-    }
-
     func start(traceName: String) {
         let trace = Performance.startTrace(name: traceName)
         startedTraces[traceName] = trace
@@ -109,11 +95,11 @@ extension FirebasePerformanceTracesManager: TracesManager {
     public func performancesMonitoring(sdkEvent: SDKEvent) {
         if sdkEvent == .sdk_start {
             let sdkRemoveSplashviewTraceName =
-                delegate?.performance_traceName(for: SDKEvent.sdk_remove_splashview) ?? SDKEvent.sdk_remove_splashview.rawValue
+                delegate?.performanceTraceNameForSDKEvent(for: SDKEvent.sdk_remove_splashview) ?? SDKEvent.sdk_remove_splashview.rawValue
             let sdkRemoveSplashviewTrace = Performance.startTrace(name: sdkRemoveSplashviewTraceName)
             startedTraces[SDKEvent.sdk_remove_splashview.rawValue] = sdkRemoveSplashviewTrace
             let sdkAllWebviewsAreLoadedTraceName =
-                delegate?.performance_traceName(for: SDKEvent.sdk_all_webviews_are_loaded) ?? SDKEvent.sdk_all_webviews_are_loaded.rawValue
+                delegate?.performanceTraceNameForSDKEvent(for: SDKEvent.sdk_all_webviews_are_loaded) ?? SDKEvent.sdk_all_webviews_are_loaded.rawValue
             let sdkAllWebviewsAreLoadedTrace = Performance.startTrace(name: sdkAllWebviewsAreLoadedTraceName)
             startedTraces[SDKEvent.sdk_all_webviews_are_loaded.rawValue] = sdkAllWebviewsAreLoadedTrace
         }
@@ -133,17 +119,20 @@ extension FirebasePerformanceTracesManager: TracesManager {
     
     public func performancesMonitoring(webViewEvent: LoadingEvent, sectionViewController: FASectionViewController) {
         if webViewEvent == .native_start {
-            let didFinishTraceName = performance_didFinishTraceName(for: sectionViewController.estimatedTabIndex())
+            let didFinishTraceName =
+                delegate?.performanceTraceNameForWebViewDidFinish(webViewAtIndex: sectionViewController.estimatedTabIndex()) ?? sectionViewController.performanceTraceNameForWebViewDidFinish()
             let webViewLoadingDidFinishTrace = Performance.startTrace(name: didFinishTraceName)
             startedTraces[didFinishTraceName] = webViewLoadingDidFinishTrace
             
-            let DOMContentLoadedTraceName = performance_DOMContentLoadedTraceName(for: sectionViewController.estimatedTabIndex())
+            let DOMContentLoadedTraceName =
+                delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: sectionViewController.estimatedTabIndex()) ?? sectionViewController.performanceTraceNameForWebViewDOMContentLoaded()
             let DOMContentLoadedTrace = Performance.startTrace(name: DOMContentLoadedTraceName)
             startedTraces[DOMContentLoadedTraceName] = DOMContentLoadedTrace
         }
         
         if webViewEvent == .native_didFinish {
-            let traceName = performance_didFinishTraceName(for: sectionViewController.estimatedTabIndex())
+            let traceName =
+                delegate?.performanceTraceNameForWebViewDidFinish(webViewAtIndex: sectionViewController.estimatedTabIndex()) ?? sectionViewController.performanceTraceNameForWebViewDidFinish()
             if let trace = startedTraces[traceName] {
                 sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
                 trace.stop()
@@ -152,7 +141,8 @@ extension FirebasePerformanceTracesManager: TracesManager {
         }
         
         if webViewEvent == .web_DOMContentLoaded {
-            let traceName = performance_DOMContentLoadedTraceName(for: sectionViewController.estimatedTabIndex())
+            let traceName =
+                delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: sectionViewController.estimatedTabIndex()) ?? sectionViewController.performanceTraceNameForWebViewDOMContentLoaded()
             if let trace = startedTraces[traceName] {
                 sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
                 trace.stop()
@@ -169,5 +159,15 @@ extension FASectionViewController {
             index = FABuilder.shared.estimatedTabIndex(webView: wv)
         }
         return index
+    }
+
+    func performanceTraceNameForWebViewDidFinish() -> String {
+        let index = estimatedTabIndex()
+        return "webView_\(index)_didFinish"
+    }
+
+    func performanceTraceNameForWebViewDOMContentLoaded() -> String {
+        let index = estimatedTabIndex()
+        return "webView_\(index)_DOMContentLoaded"
     }
 }
