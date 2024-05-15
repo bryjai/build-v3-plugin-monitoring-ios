@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Build-V3-Plugin-Monitoring-ios is a Plugin to plug to the BuildSDK V3 in order to monitor the App.'
 
   s.description      = <<-DESC
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Jérôme Morissard' => 'jerome.morissard@bryj.ai' }
   s.source           = { :git => 'git@github.com:bryjai/build-v3-plugin-monitoring-ios.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '11.1'
+  s.ios.deployment_target = '14'
   s.swift_version = '5.0'
 
   s.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/Core/*', 'Build-V3-Plugin-Monitoring-ios/Classes/Core/*/**']
