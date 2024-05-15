@@ -3,30 +3,30 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyB1BnsC_msmalGkBtk7fa0qz06_7_Hf024</string>
+	<string>AIzaSyB1BnsC_msmalGkBtk7fa0qz06_7_Hf021</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1075568137516</string>
+	<string>1075568137511</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.honest.staging</string>
+	<string>org.cocoapods.demo.Build-V3-Plugin-Monitoring-ios-Example</string>
 	<key>PROJECT_ID</key>
-	<string>the-honest-company</string>
+	<string>Build-V3-Plugin-Monitoring-ios-Example</string>
 	<key>STORAGE_BUCKET</key>
-	<string>the-honest-company.appspot.com</string>
+	<string>Build-V3-Plugin-Monitoring-ios-Example.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1075568137516:ios:4d491a4cc73c31fca50889</string>
 	<key>DATABASE_URL</key>
-	<string>https://the-honest-company.firebaseio.com</string>
+	<string>https://build-V3-Plugin-Monitoring-ios-Example.firebaseio.com</string>
 </dict>
 </plist>
