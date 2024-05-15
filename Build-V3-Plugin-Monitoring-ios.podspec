@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Jérôme Morissard' => 'jerome.morissard@bryj.ai' }
   s.source           = { :git => 'git@github.com:bryjai/build-v3-plugin-monitoring-ios.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '14'
+  s.ios.deployment_target = '14.0'
   s.swift_version = '5.0'
 
   s.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/Core/*', 'Build-V3-Plugin-Monitoring-ios/Classes/Core/*/**']
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
      'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.js']
    }
-  s.dependency 'FASDKBuild-ios', '>= 3.9.0'
+  s.dependency 'FASDKBuild-ios', '>= 3.9.5'
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 
