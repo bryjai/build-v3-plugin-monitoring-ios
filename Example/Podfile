@@ -3,7 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-platform :ios, '11.1'
+platform :ios, '14'
 
 target 'Build-V3-Plugin-Monitoring-ios_Example' do
   pod 'Build-V3-Plugin-Monitoring-ios', :path => '../'
@@ -26,6 +26,6 @@ post_install do |installer|
   end
   installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.1'
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14'
   end
 end
