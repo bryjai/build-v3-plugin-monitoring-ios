@@ -1,6 +1,6 @@
 use_frameworks!
 
-platform :ios, '14.0'
+platform :ios, '15.0'
 
 target 'Build-V3-Plugin-Monitoring-ios_Example' do
   pod 'Build-V3-Plugin-Monitoring-ios', :path => '../'
