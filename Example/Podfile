@@ -1,7 +1,3 @@
-#source 'git@github.com:followanalytics/fa-build-private-pods.git'
-#source 'git@github.com:bryjai/bryj-build-private-pods'
-#source 'https://github.com/CocoaPods/Specs.git'
-
 use_frameworks!
 
 platform :ios, '14.0'
