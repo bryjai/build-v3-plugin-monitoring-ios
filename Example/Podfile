@@ -1,0 +1,17 @@
+use_frameworks!
+
+platform :ios, '15.0'
+
+target 'Build-V3-Plugin-Monitoring-ios-Example' do
+  pod 'Build-V3-Plugin-Monitoring-ios', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/GROW', :path => '../'
+  pod 'FASDKBuild-ios', '3.9.5', :source => 'git@github.com:bryjai/bryj-build-private-pods.git'
+end
+
+post_install do |installer|
+  installer.pods_project.build_configurations.each do |config|
+    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+  end
+end
