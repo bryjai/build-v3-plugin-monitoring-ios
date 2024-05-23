@@ -11,6 +11,8 @@ import FASDKBuild_ios
 import Foundation
 import WebKit
 
+// MARK: - AppCoordinator
+
 class AppCoordinator: FABaseAppCoordinator {
     override func getConfigurationName() -> String? {
         return "configuration"
@@ -27,8 +29,10 @@ class AppCoordinator: FABaseAppCoordinator {
     }
 }
 
+// MARK: FirebasePerformanceDelegate
+
 extension AppCoordinator: FirebasePerformanceDelegate {
-    func updateTraceAdditional(attributes: [String : String]) -> [String : String] {
+    func updateTraceAdditional(attributes: [String: String]) -> [String: String] {
         return attributes
     }
 
