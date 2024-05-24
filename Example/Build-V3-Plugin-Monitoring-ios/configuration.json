@@ -1,0 +1,83 @@
+{
+    "schema_version": 3,
+    "config_version": 1,
+    "conf_file_url": "",
+    "auto_conf_polling": true,
+    "navigation_bar": {
+        "show_navigation_bar": false,
+        "title_type": "section_title",
+        "title_position": "center",
+        "image": null
+    },
+    "external_links": {
+        "same_domain": "current_webview",
+        "different_domain": "outside_of_app",
+        "custom": []
+    },
+    "sections_loading": {
+        "default_section": 0,
+        "start_loading_order": [[0]]
+    },
+    "sections": [
+        {
+            "title": "Home",
+            "image": {
+                "type": "local",
+                "filename": "home"
+            },
+            "active_image": {
+                "type": "local",
+                "filename": "home"
+            },
+            "url": "https://www.jennyfer.com/fr-fr/home",
+            "type": "url",
+            "loading_percentage_before_show": 60,
+            "allow_scroll_while_loading": true,
+            "show_transition_loader": true,
+            "pull_to_refresh": false,
+            "prevent_zooming": true,
+            "navigation_bar_buttons": {
+                "left_buttons": [],
+                "right_buttons": []
+            },
+            "web_content": {
+                "selectors_to_remove": [],
+                "scripts": [],
+                "css": []
+            },
+            "features": [],
+            "handles_urls": []
+        }
+    ],
+    "login": {
+        "enable_form_detection": true,
+        "pre_fill_username": true,
+        "enable_biometrics": true,
+        "persistent_login": true,
+        "target_logged_in_url": "https://www.jennyfer.com/fr-fr/account",
+        "logged_in_state_check": {
+            "check_type": "js_script",
+            "script": ""
+        },
+        "use_default_credentials": false,
+        "default_username": "",
+        "default_password": "",
+        "auth_selectors": [
+            {
+                "form": ".js-loginForm",
+                "login": "#LoginForm_email",
+                "password": "#LoginForm_password",
+                "submit": "#collapseLogin > div.AccessForm__actions > button"
+            }
+        ]
+    },
+    "style": {
+        "global_background_color": "#FFFFFF",
+        "tab_bar_background_color": "#ffffff",
+        "nav_bar_background_color": "#ffffff",
+        "nav_bar_title_color": "#003B82",
+        "nav_bar_button_color": "#003B82",
+        "tab_bar_translucent": true,
+        "nav_bar_translucent": true
+    }
+}
