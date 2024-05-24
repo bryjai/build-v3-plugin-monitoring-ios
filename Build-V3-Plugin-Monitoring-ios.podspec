@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.1-beta.4'
+  s.version          = '1.0.1-beta.3'
   s.summary          = 'Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.'
   s.description      = <<-DESC
   Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
