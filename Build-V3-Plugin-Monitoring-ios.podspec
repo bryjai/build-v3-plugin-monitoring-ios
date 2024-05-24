@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
   s.subspec 'FirebasePerformance' do |sp|
     sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
     sp.dependency 'Build-V3-Plugin-Monitoring-ios/Core'
-    sp.dependency 'FirebasePerformance'
+    sp.dependency 'FirebasePerformance', '10.25.0'
   end
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
