@@ -12,43 +12,45 @@ Build-V3-Plugin-Monitoring-ios is available through [CocoaPods](https://cocoapod
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Build-V3-Plugin-Monitoring-ios', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+pod 'Build-V3-Plugin-Monitoring-ios/Core', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 pod 'Build-V3-Plugin-Monitoring-ios/GROW', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 
 ```
 
-## Metrics 
+## Metrics
 
-- **Durations**, to load each WebViews 
-    - **native_start** : The native event when the WebView start to load an url
-    - **web_load** : The Web event when the WebView start to load the DOM
-    - **web_DOMContentLoaded** : The Web event when the WebView has downloaded the DOM
-    - **web_DocumentReadyStateIntractive** : The Web event when the WebView change to Interactive 
-    - **web_DocumentReadyStateComplete** : The Web event when the WebView change to Complete 
-    - **native_didFinish** : The native event when the WebView finish to download all the resources
+-   **Durations**, to load each WebViews
 
-- **Sections**, to identify each WebView using an index.
+    -   **native_start** : The native event when the WebView start to load an url
+    -   **web_load** : The Web event when the WebView start to load the DOM
+    -   **web_DOMContentLoaded** : The Web event when the WebView has downloaded the DOM
+    -   **web_DocumentReadyStateIntractive** : The Web event when the WebView change to Interactive
+    -   **web_DocumentReadyStateComplete** : The Web event when the WebView change to Complete
+    -   **native_didFinish** : The native event when the WebView finish to download all the resources
 
-- **Build Events**, some important events in a BUILD App 
-    - **sdk_start**
-    - **sdk_remove_splashview** : when the initial SplashScreen is removed 
-    - **sdk_all_webviews_are_loaded** : when all the webViews (all sections) are loaded
+-   **Sections**, to identify each WebView using an index.
 
-- **Traces attributes**,
-    - **url**,
-    - **path**,
-    - **sectionType**,
-    - **sectionIndex**,
-    - **loggedInStatus**,
+-   **Build Events**, some important events in a BUILD App
 
-## Firebase integration demo 
+    -   **sdk_start**
+    -   **sdk_remove_splashview** : when the initial SplashScreen is removed
+    -   **sdk_all_webviews_are_loaded** : when all the webViews (all sections) are loaded
+
+-   **Traces attributes**,
+    -   **url**,
+    -   **path**,
+    -   **sectionType**,
+    -   **sectionIndex**,
+    -   **loggedInStatus**,
+
+## Firebase integration demo
 
 The Plugin can be connected to Firebase Performance project.
 For now, this code is developed in the Client App.
 
 Sample of Firebase Performance implementation by implementing the protocol PerformancesMonitoringDelegate
-This sample is available in the demo project of that plugin. 
+This sample is available in the demo project of that plugin.
 
 ```Swift
 // Register the right Plugin (PerformancesMonitoringPlugin)
@@ -62,12 +64,13 @@ This sample is available in the demo project of that plugin.
 ```
 
 Register additional attributes to the Firebase Traces
+
 ```Swift
-class AppCoordinator: FABaseAppCoordinator {    
+class AppCoordinator: FABaseAppCoordinator {
     override func getConfigurationName() -> String? {
         return "configuration"
     }
-    
+
     override func getPlugins() -> [FABasePlugin] {
         let firebaseManager = FirebasePerformanceTracesManager()
         firebaseManager.delegate = self
@@ -90,7 +93,7 @@ extension AppCoordinator: FirebasePerformanceDelegate {
 ## RoadMap
 
 [ ] Add Datadog traces support  
-[ ] Add more SDK life Events  
+[ ] Add more SDK life Events
 
 ## Author
 
