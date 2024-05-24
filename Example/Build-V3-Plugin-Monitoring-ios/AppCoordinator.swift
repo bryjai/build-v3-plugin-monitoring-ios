@@ -41,10 +41,10 @@ extension AppCoordinator: FirebasePerformanceDelegate {
     }
 
     func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String {
-        return "WebViewDidFinish"
+        return "WebviewDidFinish"
     }
 
     func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String {
-        return "WebViewDOMContentLoaded("
+        return "WebviewDOMContentLoaded"
     }
 }
