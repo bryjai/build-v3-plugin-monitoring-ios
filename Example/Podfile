@@ -4,8 +4,8 @@ platform :ios, '15.0'
 
 target 'Build-V3-Plugin-Monitoring-ios-Example' do
   pod 'Build-V3-Plugin-Monitoring-ios/Core', :path => '../'
-  pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :path => '../'
-  pod 'Build-V3-Plugin-Monitoring-ios/GROW', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/FirebaseTracer', :path => '../'
+  pod 'Build-V3-Plugin-Monitoring-ios/GROWTracer', :path => '../'
   pod 'FASDKBuild-ios', '3.9.5', :source => 'git@github.com:bryjai/bryj-build-private-pods.git'
 end
 
