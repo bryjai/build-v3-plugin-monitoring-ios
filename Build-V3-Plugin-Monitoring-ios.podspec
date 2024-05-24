@@ -7,10 +7,11 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.1-beta.3'
-  s.summary          = 'Build-V3-Plugin-Monitoring-ios is a Plugin to plug to the BuildSDK V3 in order to monitor the App.'
+  s.version          = '1.0.1-beta.4'
+  s.summary          = 'Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.'
   s.description      = <<-DESC
-  Build-V3-Plugin-Monitoring-ios is a Plugin to use with the BuildSDK. This plugin provides 2 implementations to log events on Firebase and/or directly on the console. The plugin exposes an API to customize the traces and implement your own layer of monitory.
+  Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
+  This plugin provides 2 implementations to log events on Firebase and/or directly on the console. It also exposes an API to customize the traces and implement your own layer of monitory.
                        DESC
   s.homepage         = 'https://github.com/bryjai/build-v3-plugin-monitoring-ios'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

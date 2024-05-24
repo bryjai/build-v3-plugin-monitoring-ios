@@ -13,9 +13,13 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'Build-V3-Plugin-Monitoring-ios/Core', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
-pod 'Build-V3-Plugin-Monitoring-ios/FirebaseTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
-pod 'Build-V3-Plugin-Monitoring-ios/GROWTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 
+# Firebase tracer
+pod 'FirebasePerformance'
+pod 'Build-V3-Plugin-Monitoring-ios/FirebaseTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+
+# GROW tracer
+pod 'Build-V3-Plugin-Monitoring-ios/GROWTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
 ```
 
 ## Metrics
