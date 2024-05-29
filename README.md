@@ -1,73 +1,48 @@
 # Build-V3-Plugin-Monitoring-ios
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
-
-## Installation
-
-Build-V3-Plugin-Monitoring-ios is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'Build-V3-Plugin-Monitoring-ios/Core', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
-
-# Firebase tracer
-pod 'FirebasePerformance'
-pod 'Build-V3-Plugin-Monitoring-ios/FirebaseTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
-
-# GROW tracer
-pod 'Build-V3-Plugin-Monitoring-ios/GROWTracer', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
-```
+Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
 
 ## Metrics
 
--   **Durations**, to load each WebViews
+-   **Durations**, to load each webviews:
 
-    -   **native_start** : The native event when the WebView start to load an url
-    -   **web_load** : The Web event when the WebView start to load the DOM
-    -   **web_DOMContentLoaded** : The Web event when the WebView has downloaded the DOM
-    -   **web_DocumentReadyStateIntractive** : The Web event when the WebView change to Interactive
-    -   **web_DocumentReadyStateComplete** : The Web event when the WebView change to Complete
-    -   **native_didFinish** : The native event when the WebView finish to download all the resources
+    -   **native_start**: The native event when the webview starts to load an url
+    -   **web_load**: The web event when the webview starts to load the DOM
+    -   **web_DOMContentLoaded**: The web event when the webview has downloaded the DOM
+    -   **web_DocumentReadyStateInteractive**: The web event when the webview state changes to interactive
+    -   **web_DocumentReadyStateComplete**: The web event when the webview state changes to complete
+    -   **native_didFinish**: The native event when the webview finished downloading all the resources
 
--   **Sections**, to identify each WebView using an index.
+-   **Sections**, to identify each webview using an index.
 
--   **Build Events**, some important events in a BUILD App
+-   **Build events**, some important events in a Build app
 
     -   **sdk_start**
-    -   **sdk_remove_splashview** : when the initial SplashScreen is removed
-    -   **sdk_all_webviews_are_loaded** : when all the webViews (all sections) are loaded
+    -   **sdk_remove_splashview** : when the initial splashscreen is removed
+    -   **sdk_all_webviews_are_loaded** : when all the webviews (all sections) are loaded
 
--   **Traces attributes**,
-    -   **url**,
-    -   **path**,
-    -   **sectionType**,
-    -   **sectionIndex**,
-    -   **loggedInStatus**,
+-   **Traces attributes**:
 
-## Firebase integration demo
+    -   **url**
+    -   **path**
+    -   **sectionType**
+    -   **sectionIndex**
+    -   **loggedInStatus**
 
-The Plugin can be connected to Firebase Performance project.
-For now, this code is developed in the Client App.
-
-Sample of Firebase Performance implementation by implementing the protocol PerformancesMonitoringDelegate
-This sample is available in the demo project of that plugin.
+## Usage
 
 ```Swift
-// Register the right Plugin (PerformancesMonitoringPlugin)
     override func getPlugins() -> [FABasePlugin] {
-        let firebaseManager = FirebasePerformanceTracesManager() // to log traces on Firebase Performances
-        let debugManager = DebugPrintTracesManager() // to log traces in the console
-        let growManager = GROWTracesManager() // to log traces on GROW events
-        let plugin = PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, debugManager, growManager])
+        let debugManager = DebugPrintTracesManager() // log traces in the console
+        let firebaseManager = FirebasePerformanceTracesManager() // log traces on Firebase Performance
+        let growManager = GROWTracesManager() // log traces as GROW events
+
+        let plugin = PerformancesMonitoringPlugin(tracesManagers: [debugManager, firebaseManager, growManager])
         return [plugin]
     }
 ```
 
-Register additional attributes to the Firebase Traces
+Register additional attributes in the Firebase Performance
 
 ```Swift
 class AppCoordinator: FABaseAppCoordinator {
@@ -78,26 +53,41 @@ class AppCoordinator: FABaseAppCoordinator {
     override func getPlugins() -> [FABasePlugin] {
         let firebaseManager = FirebasePerformanceTracesManager()
         firebaseManager.delegate = self
+
         let plugin = PerformancesMonitoringPlugin(tracesManagers: [firebaseManager])
         return [plugin]
     }
 }
 
 extension AppCoordinator: FirebasePerformanceDelegate {
-    // Additional attributes to track
     func updateTraceAdditional(attributes: [String : String]) -> [String : String] {
         var dict = attributes
-        dict["app_configuration"] = "only_the_1st" //  loading_all_serialized // only_the_1st
+        dict["app_configuration"] = "only_the_1st"
+
         return dict
     }
 }
-
 ```
 
-## RoadMap
+## Installation
+
+To install it, simply add the following line to your Podfile:
+
+```ruby
+pod 'Build-V3-Plugin-Monitoring-ios/Core', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+
+# Firebase
+pod 'Build-V3-Plugin-Monitoring-ios/FirebasePerformance', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+pod 'FirebasePerformance'
+
+# GROW
+pod 'Build-V3-Plugin-Monitoring-ios/GROW', :git => 'git@github.com:bryjai/build-v3-sdk-plugin-monitoring-ios.git'
+```
+
+## Roadmap
 
 [ ] Add Datadog traces support  
-[ ] Add more SDK life Events
+[ ] Add more SDK life events
 
 ## Author
 
