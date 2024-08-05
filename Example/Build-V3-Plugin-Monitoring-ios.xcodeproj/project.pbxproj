@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A10BEE1819B14CA1A5E04DD /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF87AD0969CC5F857C1B2507 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */; };
+		4EC66709A81944BBCB99EB63 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0752026D36F87C1555F6A9F4 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */; };
 		654968AD2BFF4AF500797B2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 654968AC2BFF4AF500797B2D /* GoogleService-Info.plist */; };
 		655F91072BF6D72700B36D08 /* configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 655F91062BF6D72700B36D08 /* configuration.json */; };
 		655F91092BF6D76500B36D08 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655F91082BF6D76500B36D08 /* AppCoordinator.swift */; };
@@ -17,7 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		214C45383F1F9650E2FC4D8A /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig"; path = "Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		0752026D36F87C1555F6A9F4 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Build_V3_Plugin_Monitoring_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		406CDBC2F8190A0919D79448 /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig"; path = "Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig"; sourceTree = "<group>"; };
 		654968AC2BFF4AF500797B2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		655F91062BF6D72700B36D08 /* configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = configuration.json; sourceTree = "<group>"; };
 		655F91082BF6D76500B36D08 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -26,8 +27,7 @@
 		657D39562BF6D3B600087F00 /* Build-V3-Plugin-Monitoring-ios-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Build-V3-Plugin-Monitoring-ios-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		657D39622BF6D3B700087F00 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		657D39652BF6D3B700087F00 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E1742EF45E9F91593E87FC6B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig"; path = "Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig"; sourceTree = "<group>"; };
-		FF87AD0969CC5F857C1B2507 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Build_V3_Plugin_Monitoring_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8EF4A84B5E44557281D1D5B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig"; path = "Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +35,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A10BEE1819B14CA1A5E04DD /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework in Frameworks */,
+				4EC66709A81944BBCB99EB63 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C7976DB2597823BDC9861EF /* Frameworks */ = {
+		2AC021E6E4824A3258B6D28B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FF87AD0969CC5F857C1B2507 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */,
+				0752026D36F87C1555F6A9F4 /* Pods_Build_V3_Plugin_Monitoring_ios_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -56,7 +56,7 @@
 				657D39582BF6D3B600087F00 /* Build-V3-Plugin-Monitoring-ios */,
 				657D39572BF6D3B600087F00 /* Products */,
 				E57F1931CC846DB6E847EA7F /* Pods */,
-				4C7976DB2597823BDC9861EF /* Frameworks */,
+				2AC021E6E4824A3258B6D28B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,8 +85,8 @@
 		E57F1931CC846DB6E847EA7F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				214C45383F1F9650E2FC4D8A /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */,
-				E1742EF45E9F91593E87FC6B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */,
+				B8EF4A84B5E44557281D1D5B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */,
+				406CDBC2F8190A0919D79448 /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -98,11 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 657D396A2BF6D3B700087F00 /* Build configuration list for PBXNativeTarget "Build-V3-Plugin-Monitoring-ios-Example" */;
 			buildPhases = (
-				25F51D1FD5873CE7CF87CF10 /* [CP] Check Pods Manifest.lock */,
+				F6ACEB3BC3BD51AC1584DA19 /* [CP] Check Pods Manifest.lock */,
 				657D39522BF6D3B600087F00 /* Sources */,
 				657D39532BF6D3B600087F00 /* Frameworks */,
 				657D39542BF6D3B600087F00 /* Resources */,
-				F43BCFB57B386A41B4E6BAF3 /* [CP] Embed Pods Frameworks */,
+				57B2B85D4FFC8573650C44F0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -162,7 +162,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25F51D1FD5873CE7CF87CF10 /* [CP] Check Pods Manifest.lock */ = {
+		57B2B85D4FFC8573650C44F0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6ACEB3BC3BD51AC1584DA19 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -182,23 +199,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F43BCFB57B386A41B4E6BAF3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Build-V3-Plugin-Monitoring-ios-Example/Pods-Build-V3-Plugin-Monitoring-ios-Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -348,7 +348,7 @@
 		};
 		657D396B2BF6D3B700087F00 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 214C45383F1F9650E2FC4D8A /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */;
+			baseConfigurationReference = B8EF4A84B5E44557281D1D5B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -377,7 +377,7 @@
 		};
 		657D396C2BF6D3B700087F00 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E1742EF45E9F91593E87FC6B /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */;
+			baseConfigurationReference = 406CDBC2F8190A0919D79448 /* Pods-Build-V3-Plugin-Monitoring-ios-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

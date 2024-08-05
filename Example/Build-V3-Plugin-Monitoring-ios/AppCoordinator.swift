@@ -21,30 +21,31 @@ class AppCoordinator: FABaseAppCoordinator {
     override func getPlugins() -> [FABasePlugin] {
         var plugins = [FABasePlugin]()
 
-        let firebaseManager = FirebasePerformanceTracesManager()
-        firebaseManager.delegate = self
+//        let firebaseManager = FirebasePerformanceTracesManager()
+//        firebaseManager.delegate = self
 
-        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, DebugPrintTracesManager()]))
+//        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, DebugPrintTracesManager()]))
+        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [DebugPrintTracesManager()]))
         return plugins
     }
 }
 
 // MARK: FirebasePerformanceDelegate
 
-extension AppCoordinator: FirebasePerformanceDelegate {
-    func updateTraceAdditional(attributes: [String: String]) -> [String: String] {
-        return attributes
-    }
-
-    func performanceTraceNameForSDKEvent(for event: Build_V3_Plugin_Monitoring_ios.SDKEvent) -> String {
-        return "SplashRemoved"
-    }
-
-    func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String {
-        return "WebviewDidFinish"
-    }
-
-    func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String {
-        return "WebviewDOMContentLoaded"
-    }
-}
+//extension AppCoordinator: FirebasePerformanceDelegate {
+//    func updateTraceAdditional(attributes: [String: String]) -> [String: String] {
+//        return attributes
+//    }
+//
+//    func performanceTraceNameForSDKEvent(for event: Build_V3_Plugin_Monitoring_ios.SDKEvent) -> String {
+//        return "SplashRemoved"
+//    }
+//
+//    func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String {
+//        return "WebviewDidFinish"
+//    }
+//
+//    func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String {
+//        return "WebviewDOMContentLoaded"
+//    }
+//}
