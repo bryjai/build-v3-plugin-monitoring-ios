@@ -25,7 +25,7 @@ class AppCoordinator: FABaseAppCoordinator {
 //        firebaseManager.delegate = self
 
 //        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [firebaseManager, DebugPrintTracesManager()]))
-        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [DebugPrintTracesManager()]))
+        plugins.append(PerformancesMonitoringPlugin(tracesManagers: [DebugPrintTracesManager(), GROWTracesManager()]))
         return plugins
     }
 }
