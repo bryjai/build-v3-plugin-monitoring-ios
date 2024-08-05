@@ -6,7 +6,7 @@
 //
 
 import FASDKBuild_ios
-import FirebasePerformance
+@_implementationOnly import FirebasePerformance
 import Foundation
 import WebKit
 
@@ -25,33 +25,33 @@ public class FirebasePerformanceTracesManager: NSObject {
 extension FASectionViewController {
     func setAttributes(toTrace: Trace, delegate: FirebasePerformanceDelegate?) {
         var attributes = [String:String]()
-        
+
         if let str = webView()?.url?.absoluteString {
             attributes["url"] = str
         }
-        
+
         if let path = webView()?.url?.path {
             attributes["path"] = path
         }
-        
+
         // sectionType
         attributes["sectionType"] = stringifySectionType()
 
-        
+
         // sectionIndex
         var index = -1
         if let wb = webView() {
             index = FABuilder.shared.estimatedTabIndex(webView: wb)
         }
         attributes["sectionIndex"] = "\(index)"
-        
+
         // userIsLoggedIn
         attributes["loggedInStatus"] = FABuilder.shared.stringifyLoggedInStatus()
-            
+
         if let d = delegate {
             attributes = d.updateTraceAdditional(attributes: attributes)
         }
-        
+
         for k in attributes.keys {
             if let v = attributes[k] {
                 toTrace.setValue(v, forAttribute: k)
@@ -63,14 +63,14 @@ extension FASectionViewController {
 extension FirebasePerformanceTracesManager {
     func setAttributes(toTrace: Trace, delegate: FirebasePerformanceDelegate?) {
         var attributes = [String:String]()
-        
+
         // userIsLoggedIn
         attributes["loggedInStatus"] = FABuilder.shared.stringifyLoggedInStatus()
-            
+
         if let d = delegate {
             attributes = d.updateTraceAdditional(attributes: attributes)
         }
-        
+
         for k in attributes.keys {
             if let v = attributes[k] {
                 toTrace.setValue(v, forAttribute: k)
@@ -104,7 +104,7 @@ extension FirebasePerformanceTracesManager: TracesManager {
             let sdkAllWebviewsAreLoadedTrace = Performance.startTrace(name: sdkAllWebviewsAreLoadedTraceName)
             startedTraces[SDKEvent.sdk_all_webviews_are_loaded.rawValue] = sdkAllWebviewsAreLoadedTrace
         }
-        
+
         if sdkEvent == .sdk_remove_splashview, let trace = startedTraces[SDKEvent.sdk_remove_splashview.rawValue] {
             setAttributes(toTrace: trace, delegate: self.delegate)
             trace.stop()
@@ -117,7 +117,7 @@ extension FirebasePerformanceTracesManager: TracesManager {
             startedTraces[SDKEvent.sdk_all_webviews_are_loaded.rawValue] = nil
         }
     }
-    
+
     public func performancesMonitoring(webViewEvent: LoadingEvent, sectionViewController: FASectionViewController) {
         let index = sectionViewController.estimatedTabIndex()
 
@@ -126,13 +126,13 @@ extension FirebasePerformanceTracesManager: TracesManager {
                 delegate?.performanceTraceNameForWebViewDidFinish(webViewAtIndex: index) ?? performanceTraceNameForWebViewDidFinish(webViewAtIndex: index)
             let webViewLoadingDidFinishTrace = Performance.startTrace(name: didFinishTraceName)
             startedTraces[didFinishTraceName] = webViewLoadingDidFinishTrace
-            
+
             let DOMContentLoadedTraceName =
                 delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index) ?? performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index)
             let DOMContentLoadedTrace = Performance.startTrace(name: DOMContentLoadedTraceName)
             startedTraces[DOMContentLoadedTraceName] = DOMContentLoadedTrace
         }
-        
+
         if webViewEvent == .native_didFinish {
             let traceName =
                 delegate?.performanceTraceNameForWebViewDidFinish(webViewAtIndex: index) ?? performanceTraceNameForWebViewDidFinish(webViewAtIndex: index)
@@ -142,7 +142,7 @@ extension FirebasePerformanceTracesManager: TracesManager {
                 startedTraces[traceName] = nil
             }
         }
-        
+
         if webViewEvent == .web_DOMContentLoaded {
             let traceName =
                 delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index) ?? performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index)
