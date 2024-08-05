@@ -6,7 +6,6 @@ import "./src/util.rb"
 import "./src/distribute.rb"
 
 platform :ios do
-
   before_all do
 	ENV[ENV_FA_RESULT] = ""
   end
@@ -28,8 +27,7 @@ platform :ios do
   end
 
   def build_items(channel, options)
-
-	  distribute = options[:distribute]
+	distribute = options[:distribute]
     if distribute == nil
       distribute = true
     end
@@ -58,8 +56,6 @@ platform :ios do
 
       tag_repo(full_version)
     end
-
-    notify_build(channel)
   end
 
 
@@ -172,17 +168,5 @@ platform :ios do
     add_git_tag(tag: "#{full_version}")
     push_git_tags
     UI.success("Did tag repo: #{full_version}")
-  end
-
-
-  def notify_build(channel)
-    if !channel
-      UI.user_error! "missing :channel"
-    end
-    message = "Build Plugin #{PLUGIN_PROJECT} for iOS **#{channel.to_s.upcase}** released.\n#{ENV[ENV_FA_RESULT]}"
-    slack(message: message,
-        slack_url: "https://hooks.slack.com/services/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")
-    slack(message: message,
-        slack_url: "https://hooks.slack.com/services/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")
   end
 end
