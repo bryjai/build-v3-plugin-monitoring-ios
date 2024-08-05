@@ -1,0 +1,188 @@
+default_platform(:ios)
+
+fastlane_require 'aws-sdk'
+fastlane_require './src/env.rb'
+import "./src/util.rb"
+import "./src/distribute.rb"
+
+platform :ios do
+
+  before_all do
+	ENV[ENV_FA_RESULT] = ""
+  end
+
+  after_all do
+	UI.success("Results:\n#{ENV[ENV_FA_RESULT]}")
+  end
+
+  desc "build BETA configuration"
+  lane :build_beta do |options|
+    channel = Channel::BETA
+    build_items(channel, options)
+  end
+
+  desc "build RELEASE configuration"
+  lane :build_release do |options|
+    channel = Channel::RELEASE
+    build_items(channel, options)
+  end
+
+  def build_items(channel, options)
+
+	  distribute = options[:distribute]
+    if distribute == nil
+      distribute = true
+    end
+
+    build_number = get_build_number_from_git
+    UI.success("Build number #{build_number}")
+
+    version = get_version(channel)
+    UI.success("Version #{version}")
+
+    full_version = get_full_version(channel, build_number)
+    UI.success("Full version #{full_version}")
+
+    initialize_pod
+
+    build_xcframework
+
+    xc_sdk_zip_name = package_xcframework(channel, full_version)
+
+    if xc_sdk_zip_name != nil && distribute
+      xc_sdk_zip_s3_url = distribute_xcframework(channel, full_version, xc_sdk_zip_name)
+
+      if xc_sdk_zip_s3_url != nil
+        update_pod(full_version, xc_sdk_zip_s3_url)
+      end
+
+      tag_repo(full_version)
+    end
+
+    notify_build(channel)
+  end
+
+
+  def initialize_pod
+    Dir.chdir("../Example") do
+      command = "bundle exec pod install --clean-install"
+      FastlaneCore::CommandExecutor.execute(command: command)
+      UI.success("Did initialize POD")
+    end
+  end
+
+
+  def build_xcframework
+  	Dir.chdir("..") do
+  	  top_level_dir = Dir.pwd
+
+      archives_dir = "#{top_level_dir}/archives"
+      output_dir = "#{top_level_dir}/output"
+      privacy_manifest = "PrivacyInfo.xcprivacy"
+
+      FileUtils::rm_rf archives_dir
+      FileUtils::rm_rf output_dir
+
+      FileUtils::mkdir_p "archives"
+      FileUtils::mkdir_p "output"
+
+      command_iphoneos = "xcodebuild archive -workspace  \"Example/#{PLUGIN_PROJECT}.xcworkspace\" -scheme \"#{PLUGIN_PROJECT}\" -destination \"generic/platform=iOS\" -archivePath \"#{archives_dir}/iphoneos.xcarchive\" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES"
+      FastlaneCore::CommandExecutor.execute(command: command_iphoneos)
+
+      command_simulator = "xcodebuild archive -workspace  \"Example/#{PLUGIN_PROJECT}.xcworkspace\" -scheme \"#{PLUGIN_PROJECT}\" -destination \"generic/platform=iOS Simulator\" -archivePath \"#{archives_dir}/simulator.xcarchive\" SKIP_INSTALL=NO BUILD_LIBRARY_FOR_DISTRIBUTION=YES"
+      FastlaneCore::CommandExecutor.execute(command: command_simulator)
+
+      # Copy the privacy manifest into the frameworks
+      FileUtils.cp(privacy_manifest, "#{archives_dir}/iphoneos.xcarchive/Products/Library/Frameworks/#{PLUGIN_NAME}.framework/#{privacy_manifest}")
+      FileUtils.cp(privacy_manifest, "#{archives_dir}/simulator.xcarchive/Products/Library/Frameworks/#{PLUGIN_NAME}.framework/#{privacy_manifest}")
+
+      command_generate = "xcodebuild -create-xcframework -framework \"#{archives_dir}/iphoneos.xcarchive/Products/Library/Frameworks/#{PLUGIN_NAME}.framework\" -framework \"#{archives_dir}/simulator.xcarchive/Products/Library/Frameworks/#{PLUGIN_NAME}.framework\" -output \"#{output_dir}/#{PLUGIN_NAME}.xcframework\""
+      FastlaneCore::CommandExecutor.execute(command: command_generate)
+
+      UI.success("Did generate XCFramework: #{PLUGIN_NAME}")
+  	end
+  end
+
+
+  def package_xcframework(channel, full_version)
+    Dir.chdir("../output") do
+      xc_sdk_framework = "#{PLUGIN_NAME}.xcframework"
+      xc_sdk_distribution_name = "#{PLUGIN_NAME}_#{full_version}.xcframework"
+      xc_sdk_zip_name = "#{xc_sdk_distribution_name}.zip"
+      FileUtils::rm_rf xc_sdk_zip_name
+      FastlaneCore::CommandExecutor.execute(command: "zip -r -X #{xc_sdk_zip_name} #{xc_sdk_framework} ")
+      UI.success("Did package XCFramework: #{xc_sdk_zip_name}")
+      xc_sdk_zip_name
+    end
+  end
+
+
+  def distribute_xcframework(channel, full_version, xc_sdk_zip_name)
+    xc_sdk_zip_s3_path = create_zip_s3_path(channel ,xc_sdk_zip_name, full_version)
+    out = upload_files_to_s3(
+      region: 'eu-west-1',
+      bucket: SDK_BUCKET,
+      s3_path: File.dirname(xc_sdk_zip_s3_path),
+      files: ["../output/#{xc_sdk_zip_name}"]
+    )
+    if out != nil
+      append_build_message("Plugin #{PLUGIN_PROJECT} XCFramework: #{out.first}")
+      UI.success("Did distribute XCFramework: #{out.first}")
+      out.first
+    else
+      UI.important("Fail to distribute XCFramework")
+    end
+  end
+
+
+  def update_pod(full_version, xc_sdk_zip_s3_url)
+    podspec_filename = "plugin.podspec"
+    plugin_podspec_path = "../output/#{PLUGIN_PROJECT}.podspec"
+    FileUtils::cp "#{podspec_filename}", plugin_podspec_path
+
+    dependencies = DEPENDENCIES
+
+    file_content = File.open(plugin_podspec_path).read
+    File.open(plugin_podspec_path, "w") do |f|
+        file_content_updated = file_content
+        .gsub("@plugin_name@", PLUGIN_PROJECT)
+        .gsub("@plugin_version@", full_version)
+        .gsub("@xc_sdk_framework@", "#{PLUGIN_NAME}.xcframework")
+        .gsub("@xc_sdk_zip_s3_url@", xc_sdk_zip_s3_url)
+        .gsub("@xc_dependencies@", dependencies)
+        f << file_content_updated
+    end
+
+    Dir.chdir("../output") do
+      add_command = "bundle exec pod repo add #{POD_REPO_NAME} #{PLUGIN_REPO}"
+      FastlaneCore::CommandExecutor.execute(command: add_command)
+
+      push_command = "bundle exec pod repo push #{POD_REPO_NAME} #{PLUGIN_PROJECT}.podspec --allow-warnings"
+      FastlaneCore::CommandExecutor.execute(command: push_command)
+
+      append_build_message("To add this plugin use:")
+      append_build_message("pod '#{PLUGIN_PROJECT}', :source => '#{PLUGIN_REPO}'")
+
+      UI.success("Did update POD")
+    end
+  end
+
+
+  def tag_repo(full_version)
+    add_git_tag(tag: "#{full_version}")
+    push_git_tags
+    UI.success("Did tag repo: #{full_version}")
+  end
+
+
+  def notify_build(channel)
+    if !channel
+      UI.user_error! "missing :channel"
+    end
+    message = "Build Plugin #{PLUGIN_PROJECT} for iOS **#{channel.to_s.upcase}** released.\n#{ENV[ENV_FA_RESULT]}"
+    slack(message: message,
+        slack_url: "https://hooks.slack.com/services/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")
+    slack(message: message,
+        slack_url: "https://hooks.slack.com/services/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")
+  end
+end
