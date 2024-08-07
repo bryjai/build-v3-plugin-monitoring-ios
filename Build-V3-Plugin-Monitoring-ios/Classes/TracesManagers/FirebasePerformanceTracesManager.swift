@@ -6,7 +6,7 @@
 //
 
 import FASDKBuild_ios
-@_implementationOnly import FirebasePerformance
+import FirebasePerformance
 import Foundation
 import WebKit
 
