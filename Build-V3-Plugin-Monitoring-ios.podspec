@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.'
   s.description      = <<-DESC
   Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
@@ -22,8 +22,6 @@ Pod::Spec.new do |s|
   s.source_files = 'Build-V3-Plugin-Monitoring-ios/Classes/**/*'
   s.resource_bundles = {'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.{js}', 'PrivacyInfo.xcprivacy']}
   s.dependency 'FASDKBuild-ios', '>= 3.9.5'
-  s.dependency 'GROW', '>= 1.2.4'
-  s.dependency 'FirebasePerformance', '>= 10.25.0'
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
