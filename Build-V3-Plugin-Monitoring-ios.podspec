@@ -22,6 +22,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Build-V3-Plugin-Monitoring-ios/Classes/**/*'
   s.resource_bundles = {'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.{js}', 'PrivacyInfo.xcprivacy']}
   s.dependency 'FASDKBuild-ios', '>= 3.9.5'
+  s.dependency 'FirebasePerformance', '10.25.0'
   s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end

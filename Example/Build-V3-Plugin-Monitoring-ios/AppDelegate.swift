@@ -8,13 +8,13 @@
 
 import FASDKBuild_ios
 
-// import FirebaseCore
+import FirebaseCore
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: FABaseAppDelegate {
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        FirebaseApp.configure()
+        FirebaseApp.configure()
 
         appCoordinator = AppCoordinator(window: self.window!)
         appCoordinator.start()

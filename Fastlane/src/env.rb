@@ -22,7 +22,7 @@ PLUGIN_REPO = "git@github.com:bryjai/bryj-build-private-pods.git"
 # The private pod repo name
 POD_REPO_NAME = "bryj-build-private-pods"
 
-DEPENDENCIES = "spec.dependency 'FASDKBuild-ios', '>= 3.9.5'"
+DEPENDENCIES = "spec.dependency 'FASDKBuild-ios', '>= 3.9.5'\n  spec.dependency 'FirebasePerformance', '10.25.0'"
 
 def append_build_message(msg)
   empty = ENV[ENV_FA_RESULT].empty?
