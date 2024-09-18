@@ -32,14 +32,14 @@ Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app perform
 ## Usage
 
 ```Swift
-    override func getPlugins() -> [FABasePlugin] {
-        let debugManager = DebugPrintTracesManager() // log traces in the console
-        let firebaseManager = FirebasePerformanceTracesManager() // log traces on Firebase Performance
-        let growManager = GROWTracesManager() // log traces as GROW events
+override func getPlugins() -> [FABasePlugin] {
+    let debugManager = DebugPrintTracesManager() // log traces in the console
+    let firebaseManager = FirebasePerformanceTracesManager() // log traces on Firebase Performance
+    let growManager = GROWTracesManager() // log traces as GROW events
 
-        let plugin = PerformancesMonitoringPlugin(tracesManagers: [debugManager, firebaseManager, growManager])
-        return [plugin]
-    }
+    let plugin = PerformancesMonitoringPlugin(tracesManagers: [debugManager, firebaseManager, growManager])
+    return [plugin]
+}
 ```
 
 Register additional attributes in the Firebase Performance
