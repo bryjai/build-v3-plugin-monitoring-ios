@@ -88,7 +88,6 @@ extension GROWTracesManager: TracesManager {
         }
         
         let address = "\(Unmanaged.passUnretained(webView).toOpaque())"
-        let strEvent = webViewEvent.rawValue
         
         var trace: PluginMonitorTrace?
         switch(webViewEvent){
