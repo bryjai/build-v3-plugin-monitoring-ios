@@ -16,7 +16,7 @@ public protocol FirebasePerformanceDelegate {
     func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String
     func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String
     func performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: Int) -> String
-    func performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: Int) -> String
+    func performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: Int) -> String
     func performanceTraceNameForWebLoad(webViewAtIndex: Int) -> String
 }
 
@@ -149,9 +149,9 @@ extension FirebasePerformanceTracesManager: TracesManager {
             let webLoadTrace = Performance.startTrace(name: webLoadTraceName)
             startedTraces[webLoadTraceName] = webLoadTrace
             
-            let webDocumentReadyStateIntractiveTraceName = delegate?.performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: index)
-            let webDocumentReadyStateIntractiveTrace = Performance.startTrace(name: webDocumentReadyStateIntractiveTraceName)
-            startedTraces[webDocumentReadyStateIntractiveTraceName] = webDocumentReadyStateIntractiveTrace
+            let webDocumentReadyStateInteractiveTraceName = delegate?.performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index)
+            let webDocumentReadyStateInteractiveTrace = Performance.startTrace(name: webDocumentReadyStateInteractiveTraceName)
+            startedTraces[webDocumentReadyStateInteractiveTraceName] = webDocumentReadyStateInteractiveTrace
             
             let webDocumentReadyStateCompleteTraceName = delegate?.performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index)
             let webDocumentReadyStateCompleteTrace = Performance.startTrace(name: webDocumentReadyStateCompleteTraceName)
@@ -188,7 +188,7 @@ extension FirebasePerformanceTracesManager: TracesManager {
         }
         
         if webViewEvent == .web_DocumentReadyStateIntractive{
-            let traceName = delegate?.performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: index)
+            let traceName = delegate?.performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index)
             if let trace = startedTraces[traceName] {
                 sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
                 trace.stop()
@@ -238,7 +238,7 @@ extension FirebasePerformanceTracesManager: FirebasePerformanceDelegate {
         return "webView_\(webViewAtIndex)_DocumentReadyStateComplete"
     }
     
-    public func performanceTraceNameForWebDocumentReadyStateIntractive(webViewAtIndex: Int) -> String {
+    public func performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: Int) -> String {
         return "webView_\(webViewAtIndex)_DocumentReadyStateIntractive"
     }
     
