@@ -17,6 +17,7 @@ public protocol PerformancesMonitoringDelegate: NSObject {
 
 public enum SDKEvent: String {
     case sdk_start
+    case stop_sdk_start
     case sdk_remove_splashview
     case sdk_all_webviews_are_loaded
 }

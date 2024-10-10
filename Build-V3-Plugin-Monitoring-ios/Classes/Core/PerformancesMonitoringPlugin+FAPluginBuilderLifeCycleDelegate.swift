@@ -12,6 +12,10 @@ extension PerformancesMonitoringPlugin: FAPluginBuilderLifeCycleDelegate {
     public func builderWillStart() {
         saveCurrentDate(forEvent: SDKEvent.sdk_start)
     }
+    
+    public func builderDidStart() {
+        saveCurrentDate(forEvent: SDKEvent.stop_sdk_start)
+    }
         
     public func builderRemoveSplashView() {
         saveCurrentDate(forEvent: SDKEvent.sdk_remove_splashview)

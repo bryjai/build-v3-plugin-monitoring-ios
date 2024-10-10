@@ -15,6 +15,9 @@ public protocol FirebasePerformanceDelegate {
     func performanceTraceNameForSDKEvent(for event: SDKEvent) -> String
     func performanceTraceNameForWebViewDidFinish(webViewAtIndex: Int) -> String
     func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String
+    func performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: Int) -> String
+    func performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: Int) -> String
+    func performanceTraceNameForWebLoad(webViewAtIndex: Int) -> String
 }
 
 public class FirebasePerformanceTracesManager: NSObject {
@@ -94,6 +97,10 @@ extension FirebasePerformanceTracesManager {
 extension FirebasePerformanceTracesManager: TracesManager {
     public func performancesMonitoring(sdkEvent: SDKEvent) {
         if sdkEvent == .sdk_start {
+            let sdkStart = delegate?.performanceTraceNameForSDKEvent(for: .sdk_start) ?? performanceTraceNameForSDKEvent(for: .sdk_start)
+            let sdkStartTrace = Performance.startTrace(name: sdkStart)
+            startedTraces[sdkStart] = sdkStartTrace
+            
             let sdkRemoveSplashviewTraceName =
                 delegate?.performanceTraceNameForSDKEvent(for: .sdk_remove_splashview) ?? performanceTraceNameForSDKEvent(for: .sdk_remove_splashview)
             let sdkRemoveSplashviewTrace = Performance.startTrace(name: sdkRemoveSplashviewTraceName)
@@ -116,6 +123,12 @@ extension FirebasePerformanceTracesManager: TracesManager {
             trace.stop()
             startedTraces[SDKEvent.sdk_all_webviews_are_loaded.rawValue] = nil
         }
+        
+        if sdkEvent == .stop_sdk_start, let trace = startedTraces[SDKEvent.sdk_start.rawValue] {
+            setAttributes(toTrace: trace, delegate: self.delegate)
+            trace.stop()
+            startedTraces[SDKEvent.sdk_start.rawValue] = nil
+        }
     }
     
     public func performancesMonitoring(webViewEvent: LoadingEvent, sectionViewController: FASectionViewController) {
@@ -131,6 +144,18 @@ extension FirebasePerformanceTracesManager: TracesManager {
                 delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index) ?? performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index)
             let DOMContentLoadedTrace = Performance.startTrace(name: DOMContentLoadedTraceName)
             startedTraces[DOMContentLoadedTraceName] = DOMContentLoadedTrace
+            
+            let webLoadTraceName = delegate?.performanceTraceNameForWebLoad(webViewAtIndex: index) ?? performanceTraceNameForWebLoad(webViewAtIndex: index)
+            let webLoadTrace = Performance.startTrace(name: webLoadTraceName)
+            startedTraces[webLoadTraceName] = webLoadTrace
+            
+            let webDocumentReadyStateInteractiveTraceName = delegate?.performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index)
+            let webDocumentReadyStateInteractiveTrace = Performance.startTrace(name: webDocumentReadyStateInteractiveTraceName)
+            startedTraces[webDocumentReadyStateInteractiveTraceName] = webDocumentReadyStateInteractiveTrace
+            
+            let webDocumentReadyStateCompleteTraceName = delegate?.performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index)
+            let webDocumentReadyStateCompleteTrace = Performance.startTrace(name: webDocumentReadyStateCompleteTraceName)
+            startedTraces[webDocumentReadyStateCompleteTraceName] = webDocumentReadyStateCompleteTrace
         }
         
         if webViewEvent == .native_didFinish {
@@ -146,6 +171,33 @@ extension FirebasePerformanceTracesManager: TracesManager {
         if webViewEvent == .web_DOMContentLoaded {
             let traceName =
                 delegate?.performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index) ?? performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: index)
+            if let trace = startedTraces[traceName] {
+                sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
+                trace.stop()
+                startedTraces[traceName] = nil
+            }
+        }
+        
+        if webViewEvent == .web_load {
+            let traceName = delegate?.performanceTraceNameForWebLoad(webViewAtIndex: index) ?? performanceTraceNameForWebLoad(webViewAtIndex: index)
+            if let trace = startedTraces[traceName] {
+                sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
+                trace.stop()
+                startedTraces[traceName] = nil
+            }
+        }
+        
+        if webViewEvent == .web_DocumentReadyStateIntractive{
+            let traceName = delegate?.performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: index)
+            if let trace = startedTraces[traceName] {
+                sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
+                trace.stop()
+                startedTraces[traceName] = nil
+            }
+        }
+        
+        if webViewEvent == .web_DocumentReadyStateComplete {
+            let traceName = delegate?.performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index) ?? performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: index)
             if let trace = startedTraces[traceName] {
                 sectionViewController.setAttributes(toTrace: trace, delegate: self.delegate)
                 trace.stop()
@@ -180,5 +232,17 @@ extension FirebasePerformanceTracesManager: FirebasePerformanceDelegate {
 
     public func performanceTraceNameForWebViewDOMContentLoaded(webViewAtIndex: Int) -> String {
         return "webView_\(webViewAtIndex)_DOMContentLoaded"
+    }
+    
+    public func performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: Int) -> String {
+        return "webView_\(webViewAtIndex)_DocumentReadyStateComplete"
+    }
+    
+    public func performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: Int) -> String {
+        return "webView_\(webViewAtIndex)_DocumentReadyStateIntractive"
+    }
+    
+    public func performanceTraceNameForWebLoad(webViewAtIndex: Int) -> String {
+        return "webView_\(webViewAtIndex)_load"
     }
 }
