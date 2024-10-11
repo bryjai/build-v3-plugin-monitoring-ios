@@ -74,6 +74,8 @@ extension GROWTracesManager: TracesManager {
 
         case .sdk_all_webviews_are_loaded:
             trace = end(traceName: SDKEvent.sdk_all_webviews_are_loaded.rawValue)
+        case .stop_sdk_start:
+            break
         }
         
         if let t = trace {
