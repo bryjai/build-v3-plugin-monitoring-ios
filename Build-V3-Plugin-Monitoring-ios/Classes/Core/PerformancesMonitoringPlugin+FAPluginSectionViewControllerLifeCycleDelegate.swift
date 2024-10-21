@@ -13,15 +13,16 @@ extension PerformancesMonitoringPlugin: FAPluginSectionViewControllerLifeCycleDe
     public func lifeCycleWebViewWillBeInitialized(sectionViewController: FASectionViewController, configuration: WKWebViewConfiguration) {}
     
     public func lifeCycleWebViewInitialized(sectionViewController: FASectionViewController) {
-        sectionViewController.userContentController()?.add(scriptMessageHandler,
-                                                           name:PerformancesPluginScriptMessageHandler.performance_DOMContentLoaded)
-        sectionViewController.userContentController()?.add(scriptMessageHandler,
-                                                           name:PerformancesPluginScriptMessageHandler.performance_DocumentReadyStateComplete)
-        sectionViewController.userContentController()?.add(scriptMessageHandler,
-                                                           name:PerformancesPluginScriptMessageHandler.performance_DocumentReadyStateIntractive)
-        sectionViewController.userContentController()?.add(scriptMessageHandler,
-                                                           name:PerformancesPluginScriptMessageHandler.performance_load)
-        
+        let handlers: [String] = [
+            PerformancesPluginScriptMessageHandler.performance_DOMContentLoaded,
+            PerformancesPluginScriptMessageHandler.performance_DocumentReadyStateComplete,
+            PerformancesPluginScriptMessageHandler.performance_DocumentReadyStateIntractive,
+            PerformancesPluginScriptMessageHandler.performance_load,
+        ]
+        for handler in handlers {
+            sectionViewController.userContentController()?.removeScriptMessageHandler(forName: handler)
+            sectionViewController.userContentController()?.add(scriptMessageHandler, name: handler)
+        }
         let classBundle = Bundle(for: PerformancesMonitoringPlugin.self)
         if let bundle = Bundle(path: classBundle.bundlePath.appending("/Build-V3-Plugin-Monitoring-ios.bundle")) {
             sectionViewController.webView()!.addJavascriptFileInjectionIfNeeded(resource: "interface_performances", forMainFrameOnly: true, bundle: bundle)
