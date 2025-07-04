@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Jérôme Morissard' => 'jerome.morissard@bryj.ai' }
   s.source           = { :git => 'git@github.com:bryjai/build-v3-plugin-monitoring-ios.git', :tag => s.version.to_s }
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '16.0'
   s.swift_version = '5.0'
   s.default_subspec = 'Core'
-  s.dependency 'FASDKBuild-ios', '>= 3.9.5'
+  s.dependency 'FASDKBuild-ios', '>= 3.9.10'
   s.subspec 'Core' do |sp|
     sp.source_files = 'Build-V3-Plugin-Monitoring-ios/Classes/Core/**/*'
     sp.resource_bundles = {'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.{js}', 'PrivacyInfo.xcprivacy']}
