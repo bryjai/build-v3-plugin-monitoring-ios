@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '16.0'
   s.swift_version = '5.0'
   s.default_subspec = 'Core'
-  s.dependency 'FASDKBuild-ios', '>= 3.9.9'
+  s.dependency 'FASDKBuild-ios', '>= 3.9.10'
   s.subspec 'Core' do |sp|
     sp.source_files = 'Build-V3-Plugin-Monitoring-ios/Classes/Core/**/*'
     sp.resource_bundles = {'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.{js}', 'PrivacyInfo.xcprivacy']}
