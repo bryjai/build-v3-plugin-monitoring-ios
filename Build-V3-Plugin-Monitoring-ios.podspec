@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.3'
+  s.version          = '1.0.4'
   s.summary          = 'Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.'
   s.description      = <<-DESC
   Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '16.0'
   s.swift_version = '5.0'
   s.default_subspec = 'Core'
-  s.dependency 'FASDKBuild-ios', '>= 3.9.10'
+  s.dependency 'FASDKBuild-ios', '~> 3.9.10'
   s.subspec 'Core' do |sp|
     sp.source_files = 'Build-V3-Plugin-Monitoring-ios/Classes/Core/**/*'
     sp.resource_bundles = {'Build-V3-Plugin-Monitoring-ios' => ['Build-V3-Plugin-Monitoring-ios/Assets/*.{js}', 'PrivacyInfo.xcprivacy']}
@@ -28,13 +28,11 @@ Pod::Spec.new do |s|
   s.subspec 'GROW' do |sp|
     sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/GROWPerformanceTracesManager.swift']
     sp.dependency 'Build-V3-Plugin-Monitoring-ios/Core'
-    sp.dependency 'GROW'
+    sp.dependency 'GROW', '~> 1.2.5'
   end
   s.subspec 'FirebasePerformance' do |sp|
     sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
     sp.dependency 'Build-V3-Plugin-Monitoring-ios/Core'
     sp.dependency 'FirebasePerformance', '10.25.0'
   end
-  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'}
-  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
