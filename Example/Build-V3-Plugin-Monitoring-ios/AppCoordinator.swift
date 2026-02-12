@@ -35,15 +35,15 @@ extension AppCoordinator: FirebasePerformanceDelegate {
     func performanceTraceNameForWebDocumentReadyStateComplete(webViewAtIndex: Int) -> String {
         return "WebDocumentReadyStateComplete"
     }
-    
+
     func performanceTraceNameForWebDocumentReadyStateInteractive(webViewAtIndex: Int) -> String {
         return "WebDocumentReadyStateInteractive"
     }
-    
+
     func performanceTraceNameForWebLoad(webViewAtIndex: Int) -> String {
         return "WebLoad"
     }
-    
+
     func updateTraceAdditional(attributes: [String: String]) -> [String: String] {
         return attributes
     }
