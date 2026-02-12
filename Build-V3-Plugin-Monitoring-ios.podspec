@@ -7,7 +7,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Build-V3-Plugin-Monitoring-ios'
-  s.version          = '1.0.4'
+  s.version          = '1.0.5'
   s.summary          = 'Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.'
   s.description      = <<-DESC
   Build-V3-Plugin-Monitoring-ios is a plugin capable of monitoring the app performance.
@@ -33,6 +33,6 @@ Pod::Spec.new do |s|
   s.subspec 'FirebasePerformance' do |sp|
     sp.source_files = ['Build-V3-Plugin-Monitoring-ios/Classes/TracesManagers/FirebasePerformanceTracesManager.swift']
     sp.dependency 'Build-V3-Plugin-Monitoring-ios/Core'
-    sp.dependency 'FirebasePerformance', '10.25.0'
+    sp.dependency 'FirebasePerformance', '11.9.0'
   end
 end
